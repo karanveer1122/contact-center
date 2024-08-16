@@ -1,0 +1,58 @@
+---
+  function:
+    handler: src/getAgentStatusList/index.handler
+    memorySize: 512
+    timeout: 30
+    runtime: nodejs14.x
+    description: contact-center get agent status list api
+    name: contact-center-get-agent-status-list-${self:provider.stage}
+    #layers:
+    #  - { Ref: AcsApiLayerLambdaLayer }
+    package:
+      patterns:
+        - '!**/*'
+        - 'src/getAgentStatusList/*.js'
+        - 'src/shared/**'
+    ##provisionedConcurrency: ${ssm:/${self:service}/${self:custom.stage}/scaleConfig.provisionedConcurrency}
+    ##concurrencyAutoscaling: ${ssm:/${self:service}/${self:custom.stage}/scaleConfig.concurrencyAutoscaling}
+    environment: 
+      INSTANCE_ID : ${ssm:instanceid}
+    events:
+      - http:
+          path: /agentStatuses
+          method: get
+          integration: lambda
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+          private: false #TODO: change to true
+          # authorizer:
+          #   name: authorizer
+          #   arn: arn:aws:cognito-idp:us-west-2:046385354557:userpool/us-west-2_SQc5bIjVO
+          request:
+            template: 
+              application/json: ${file(templates/requestTemplate.vtl)}
+          response:
+            statusCodes:
+              200:
+                pattern: ''
+                template: $input.json('$.body')
+              400:
+                pattern: '.*httpStatus\":400.*'
+                template: ${file(templates/responseTemplate.vtl)}
+              401:
+                pattern: '.*httpStatus\":401.*'
+                template: ${file(templates/responseTemplate.vtl)}
+              403:
+                pattern: '.*httpStatus\":403.*'
+                template: ${file(templates/responseTemplate.vtl)}
+              404:
+                pattern: '.*httpStatus\":404.*'
+                template: ${file(templates/responseTemplate.vtl)}
+              500:
+                pattern: '.*httpStatus\":500.*'
+                template: ${file(templates/responseTemplate.vtl)}
+              502:
+                pattern: '.*httpStatus\":502.*'
+                template: ${file(templates/responseTemplate.vtl)}

@@ -1,0 +1,55 @@
+
+service: contact-center-backend-app
+
+frameworkVersion: "2"
+
+plugins:
+   - serverless-appsync-plugin	  
+   
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  lambdaHashingVersion: 20201221
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: 
+            - arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${ssm:agent-status-tracker-table}
+            - arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${ssm:agent-dashboard-metrices-table}
+            - arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${ssm:contact-activity-table}
+        - Effect: Allow
+          Action:
+            - ssm:DescribeParameters
+            - ssm:GetParameter
+          Resource: "*"
+        - Effect: Allow
+          Action: 
+            - dynamodb:GetRecords
+            - dynamodb:GetShardIterator
+            - dynamodb:DescribeStream
+            - dynamodb:ListStreams  
+          Resource: 
+            - arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${ssm:agent-status-tracker-table}/stream/2022-05-18T06:37:54.250                   
+custom:      
+    ${file(config/appSync/appSync.yml)}                
+
+functions: 
+  getAgentStatus: ${file(config/functions/getAgentStatus.yml):function}
+  createAgentStatus: ${file(config/functions/createAgentStatus.yml):function}
+  updateAgentStatus: ${file(config/functions/updateAgentStatus.yml):function}
+  deleteAgentStatus: ${file(config/functions/deleteAgentStatus.yml):function}
+  updateAgentMetrices: ${file(config/functions/updateAgentMetrices.yml):function}
+  createAgentJourney: ${file(config/functions/createAgentJourney.yml):function}
+  getAgentStatusList: ${file(config/functions/getAgentStatusList.yml):function}
+

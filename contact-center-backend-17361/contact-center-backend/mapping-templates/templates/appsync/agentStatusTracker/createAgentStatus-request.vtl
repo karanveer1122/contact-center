@@ -1,0 +1,15 @@
+{
+    "version": "2017-02-28",
+    "operation": "PutItem",
+    "key": {
+        "agentId": { "S": "$context.arguments.agentId" },
+        "startTimeStamp": { "S": "$context.arguments.startTimeStamp" },
+        "status": { "S": "$context.arguments.status" }
+    },
+    "attributeValues": {
+        "agentId": { "S": "$context.arguments.agentId" },
+        "startTimeStamp": { "S": "$context.arguments.startTimeStamp" },
+        "status": #if($context.arguments.status) { "S": "$context.arguments.status" } #else { "S": "pending" } #end,
+      
+    }
+}

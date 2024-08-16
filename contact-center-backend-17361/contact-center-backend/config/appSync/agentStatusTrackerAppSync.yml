@@ -1,0 +1,88 @@
+  name: agent-status-tracker-APIs
+  schema: config/schemas/agentStatusSchema.graphql
+  authenticationType: API_KEY
+  mappingTemplates:
+    - type: Mutation
+      field: createAgentStatus
+      dataSource: agentStatusTable
+      request: templates/appsync/agentStatusTracker/createAgentStatus-request.vtl
+      response: templates/appsync/agentStatusTracker/createAgentStatus-response.vtl
+
+    - type: Mutation
+      field: updateAgentStatus
+      dataSource: agentStatusTable
+      request: templates/appsync/agentStatusTracker/updateAgentStatus-request.vtl
+      response: templates/appsync/agentStatusTracker/updateAgentStatus-response.vtl
+
+    - type: Mutation
+      field: createAgentJourney
+      dataSource: activityTable
+      request: templates/appsync/agentStatusTracker/createAgentJourney-request.vtl
+      response: templates/appsync/agentStatusTracker/createAgentJourney-response.vtl
+
+    - type: Query
+      field: getAgentActivity
+      dataSource: agentHistory
+      request: templates/appsync/contactActivity/getActivityById-request.vtl
+      response: templates/appsync/contactActivity/getActivityById-response.vtl
+
+    - type: AgentActivity
+      field: customer
+      dataSource: customerProfile
+      request: templates/appsync/contactActivity/AgentActivity.customer-request.vtl
+      response: templates/appsync/contactActivity/AgentActivity.customer-response.vtl
+
+  dataSources:
+    - type: AMAZON_DYNAMODB
+      name: agentToDoList
+      description: agent to do list
+      config:
+        tableName: agent_todo_list
+        iamRoleStatements:
+          - Effect: "Allow"
+            Action:
+              - dynamodb:DescribeTable
+              - dynamodb:Query
+              - dynamodb:Scan
+              - dynamodb:GetItem
+              - dynamodb:PutItem
+              - dynamodb:UpdateItem
+              - dynamodb:DeleteItem
+            Resource: "*"
+
+    - type: AMAZON_DYNAMODB
+      name: agentToDoCreate
+      description: create agent to do list
+      config:
+        tableName: agent_todo_list
+        iamRoleStatements:
+          - Effect: "Allow"
+            Action:
+              - dynamodb:DescribeTable
+              - dynamodb:Query
+              - dynamodb:Scan
+              - dynamodb:GetItem
+              - dynamodb:PutItem
+              - dynamodb:UpdateItem
+              - dynamodb:DeleteItem
+            Resource: "*"
+
+    - type: AMAZON_DYNAMODB
+      name: agentStatusTable
+      config:
+        tableName: agent_status_tracker
+
+    - type: AMAZON_DYNAMODB
+      name: activityTable
+      config:
+        tableName: contact_activity
+
+    - type: AMAZON_DYNAMODB
+      name: agentHistory
+      config:
+        tableName: contact_history_dev
+
+    - type: AMAZON_DYNAMODB
+      name: customerProfile
+      config:
+        tableName: customer_profile

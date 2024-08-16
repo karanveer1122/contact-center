@@ -1,0 +1,106 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  getAgentStatus: [GetAgentStatus]
+}
+type Mutation {
+  createAgentStatus(
+    agentId: ID!
+    startTimeStamp: String!
+    status: String!
+  ): SaveAgentStatus
+  updateAgentStatus(
+    agentId: ID!
+    startTimeStamp: String!
+    endTimeStamp: String!
+    status: String!
+  ): Update
+  deleteAgentStatus(agentId: ID!): Delete
+}
+type GetAgentStatus {
+  agentId: ID!
+  startTimeStamp: String
+  endTimeStamp: String
+  status: String
+}
+type SaveAgentStatus {
+  agentId: ID!
+  startTimeStamp: String
+  status: String
+}
+
+type Update {
+  agentId: ID!
+  startTimeStamp: String
+  endTimeStamp: String
+  status: String
+}
+
+type Delete {
+  agentId: ID!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Mutation {
+  createAgentJourney(
+    contactId: ID!
+    customerId: String!
+    customerName: String!
+    channel: String!
+    type: String!
+    activityOf: String
+    activity: String
+    contactStatus: String
+    timeStamp: String!
+    agentId: String
+    agentName: String
+    queueId: String
+    redmineNumber: String
+    recordingLink: String
+  ): SaveAgentJourney
+}
+
+type SaveAgentJourney {
+  journeyId: String
+}
+
+type Query {
+  getAgentActivity(limit: Int, nextToken: String, agentId: String!): AgentConnection
+}
+
+
+
+type AgentConnection {
+  items: [AgentActivity]
+  nextToken: String
+}
+
+type AgentActivity {
+  contactId: String!
+  timeStamp: String!
+  customerId: ID!
+  customerName: String!
+  channel: String!
+  type: String!
+  contactStatus: String!
+  agentId: String!
+  agentName: String!
+  queueId: String!
+  redmineNumber: String!
+  recordingLink: String!
+  customer: Customer
+}
+
+type Customer {
+phoneNumber: String
+email: String
+}
+
+

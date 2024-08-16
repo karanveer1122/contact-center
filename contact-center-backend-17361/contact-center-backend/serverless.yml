@@ -1,0 +1,53 @@
+
+service: contact-center-backend-app
+
+frameworkVersion: "2"
+
+plugins:
+   - serverless-appsync-plugin	  
+   
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  lambdaHashingVersion: 20201221
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - ssm:DescribeParameters
+            - ssm:GetParameter
+          Resource: "*"
+        - Effect: Allow
+          Action: 
+            - dynamodb:GetRecords
+            - dynamodb:GetShardIterator
+            - dynamodb:DescribeStream
+            - dynamodb:ListStreams  
+          Resource: "*" 
+        - Effect: Allow
+          Action: 
+            - connect:*
+          Resource: "*"
+                              
+custom: 
+  appSync:     
+    - ${file(config/appSync/agentStatusTrackerAppSync.yml)}               
+    - ${file(config/appSync/agentTodoAppSync.yml)}
+functions: 
+  getAgentStatusList: ${file(config/functions/getAgentStatusList.yml):function}
+  updateAgentDashboardMetrices: ${file(config/functions/updateAgentDashboardMetrices.yml):function}
+  updateContactHistory: ${file(config/functions/updateContactHistory.yml):function}
+

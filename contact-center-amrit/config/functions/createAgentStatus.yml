@@ -1,0 +1,5 @@
+---
+  function:
+    handler: src/createAgentStatus/index.handler
+    environment:
+      AGENT_STATUS_TRACKER_TABLE_NAME: ${ssm:agent-status-tracker-table}

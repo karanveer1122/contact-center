@@ -1,0 +1,32 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  listAgentToDo(limit: Int, nextToken: String): TodoConnection
+}
+
+type TodoConnection {
+  items: [Todo]
+  nextToken: String
+}
+
+type Mutation {
+  addAgentToDo(
+    agentId: String!
+    title: String!
+    notes: String
+    status: String!
+    timestamp: AWSDateTime!
+  ): Todo
+}
+
+type Todo {
+  id: ID!
+  agentId: String
+  title: String
+  notes: String
+  status: String
+  timestamp: AWSDateTime
+}

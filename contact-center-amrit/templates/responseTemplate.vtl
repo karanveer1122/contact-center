@@ -1,0 +1,7 @@
+#set ($errorMessageObj = $util.parseJson($input.path('$.errorMessage')))
+#set ($headerValue = $errorMessageObj.correlationId)
+#set ($context.responseOverride.header.X-Correlation-Id = $headerValue)
+{
+    "ErrorCode": "$util.escapeJavaScript($errorMessageObj.code)",
+    "ErrorDescription": "$util.escapeJavaScript($errorMessageObj.message)"
+}

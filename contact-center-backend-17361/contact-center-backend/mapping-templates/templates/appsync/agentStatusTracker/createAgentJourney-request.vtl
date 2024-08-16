@@ -1,0 +1,23 @@
+{
+    "version": "2017-02-28",
+    "operation": "PutItem",
+    "key": {
+        "journeyId": { "S": "$util.autoId()"},
+    },
+    "attributeValues": {
+        "contactId": { "S": "$context.arguments.contactId" },
+        "customerId": { "S": "$context.arguments.customerId" },
+        "customerName": { "S": "$context.arguments.customerName" },
+        "channel": {"S": "$context.arguments.channel"},
+        "type": {"S": "context.arguments.type"},
+        "activityOf": #if($context.arguments.activityOf) { "S": "$context.arguments.activityOf" } #else { "S": "N/A" } #end,
+        "activity" : #if($context.arguments.activity) { "S": "$context.arguments.activity" } #else { "S": "N/A" } #end,
+        "contactStatus" : #if($context.arguments.contactStatus) { "S": "$context.arguments.contactStatus" } #else { "S": "N/A" } #end,
+        "timeStamp": {"S": "context.arguments.timeStamp"},
+        "agentId" : #if($context.arguments.agentId) { "S": "$context.arguments.agentId" } #else { "S": "N/A" } #end,
+        "agentName" : #if($context.arguments.agentName) { "S": "$context.arguments.agentName" } #else { "S": "N/A" } #end,
+        "queueId" : #if($context.arguments.queueId) { "S": "$context.arguments.queueId" } #else { "S": "N/A" } #end,
+        "redmineNumber" : #if($context.arguments.redmineNumber) { "S": "$context.arguments.redmineNumber" } #else { "S": "N/A" } #end,
+        "recordingLink" : #if($context.arguments.recordingLink) { "S": "$context.arguments.recordingLink" } #else { "S": "N/A" } #end
+    }
+}

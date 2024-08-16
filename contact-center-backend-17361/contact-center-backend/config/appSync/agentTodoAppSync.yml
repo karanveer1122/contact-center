@@ -1,0 +1,51 @@
+  name: agent-todo-APIs
+  schema: config/schemas/agentTodoSchema.graphql
+  authenticationType: API_KEY
+  mappingTemplates:
+    - type: Mutation
+      field: addAgentToDo
+      dataSource: agentToDoCreate
+      request: templates/appsync/agentToDoList/addTodo-request.vtl
+      response: templates/appsync/agentToDoList/addTodo-response.vtl
+
+    - type: Query
+      field: listAgentToDo
+      dataSource: agentToDoList
+      request: templates/appsync/agentToDoList/listTodos-request.vtl
+      response: templates/appsync/agentToDoList/listTodos-response.vtl
+
+  dataSources:
+    - type: AMAZON_DYNAMODB
+      name: agentToDoList
+      description: agent to do list
+      config:
+        tableName: agent_todo_list
+        iamRoleStatements:
+          - Effect: "Allow"
+            Action:
+              - dynamodb:DescribeTable
+              - dynamodb:Query
+              - dynamodb:Scan
+              - dynamodb:GetItem
+              - dynamodb:PutItem
+              - dynamodb:UpdateItem
+              - dynamodb:DeleteItem
+            Resource: "*"
+
+    - type: AMAZON_DYNAMODB
+      name: agentToDoCreate
+      description: create agent to do list
+      config:
+        tableName: agent_todo_list
+        iamRoleStatements:
+          - Effect: "Allow"
+            Action:
+              - dynamodb:DescribeTable
+              - dynamodb:Query
+              - dynamodb:Scan
+              - dynamodb:GetItem
+              - dynamodb:PutItem
+              - dynamodb:UpdateItem
+              - dynamodb:DeleteItem
+            Resource: "*"
+

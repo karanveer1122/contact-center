@@ -1,0 +1,54 @@
+appSync:
+  name: agent-status-tracker-APIs
+  authenticationType: API_KEY
+  mappingTemplates:
+    - type: Mutation
+      field: createAgentStatus
+      dataSource: createAgentStatusFunction
+      request: false
+      response: false
+    - type: Mutation
+      field: updateAgentStatus
+      dataSource: updateAgentStatusFunction
+      request: false
+      response: false
+    - type: Mutation
+      field: deleteAgentStatus
+      dataSource: deleteAgentStatusFunction
+      request: false
+      response: false
+    - type: Query
+      field: getAgentStatus
+      dataSource: getAgentStatusFunction
+      request: false
+      response: false
+    - type: Mutation
+      field: createAgentJourney
+      dataSource: createAgentJourneyFunction
+      request: false
+      response: false
+  dataSources:
+    - type: AWS_LAMBDA
+      name: createAgentStatusFunction
+      config:
+        functionName: createAgentStatus
+
+    - type: AWS_LAMBDA
+      name: updateAgentStatusFunction
+      config:
+        functionName: updateAgentStatus
+
+    - type: AWS_LAMBDA
+      name: deleteAgentStatusFunction
+      config:
+        functionName: deleteAgentStatus
+
+    - type: AWS_LAMBDA
+      name: getAgentStatusFunction
+      config:
+        functionName: getAgentStatus
+
+    - type: AWS_LAMBDA
+      name: createAgentJourneyFunction
+      config:
+        functionName: createAgentJourney

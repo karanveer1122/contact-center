@@ -1,0 +1,34 @@
+{
+    "body": {},
+    "method": "GET",
+    "resourcePath": "/agentStatuses",
+    "cognitoPoolClaims": {},
+    "customCognitoPoolClaims": {
+        "sxm_sub": ""
+    },
+    "headers": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "US",
+        //"Host_": "exmr0hd7aa.execute-api.us-east-1.amazonaws.com",
+        //"Postman-Token": "2714e577-eb84-4e4f-a79d-f654f4b5dcc0",
+        //"User-Agent": "PostmanRuntime/7.26.8",
+        //"Via": "1.1 9de47a1dc97604e747abf99432071d94.cloudfront.net (CloudFront)",
+        //"X-Amz-Cf-Id": "IFRuqYIN8Bs4464KHgG7BF5Agj-AFCUaPJzPbwCR0F66-b6WeH4XQA==",
+        //"X-Amzn-Trace-Id": "Root=1-61c63fde-675d98691fab99e9327a1f74",
+        //"X-Correlation-Id": "1234",
+        //"X-Forwarded-For": "24.120.55.70, 64.252.190.144",
+        //"X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "query": {
+        "page": 1,
+        "size": 30
+    },
+    "path": {}
+}

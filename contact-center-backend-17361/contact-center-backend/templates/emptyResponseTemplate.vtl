@@ -1,0 +1,2 @@
+#set ($inputRoot = $input.path('$'))
+#set($context.responseOverride.header.X-Correlation-Id = $input.path('$.headers.X-Correlation-Id'))

@@ -1,0 +1,12 @@
+{
+    "version": "2017-02-28",
+    "operation": "Query",
+    "query": {
+        "expression": "agentId = :agentId",
+        "expressionValues": {
+            ":agentId": $util.dynamodb.toDynamoDBJson($context.arguments.agentId)
+        }
+    },
+    "index": "agentId",
+    "limit": #if($context.arguments.limit) $context.arguments.limit #else 10 #end,
+}

@@ -1,0 +1,7 @@
+---
+  function:
+    handler: src/updateContactHistory/index.handler
+    events:
+      - stream:
+          type: dynamodb
+          arn: arn:aws:dynamodb:us-east-1:333009048743:table/contact_activity/stream/2022-05-24T07:41:43.639

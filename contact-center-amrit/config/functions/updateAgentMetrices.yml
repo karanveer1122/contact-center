@@ -1,0 +1,8 @@
+---
+  function:
+    handler: src/updateMetrices/index.handler
+    events:
+      - stream:
+          type: dynamodb
+          arn: arn:aws:dynamodb:us-east-1:${aws:accountId}:table/${ssm:agent-status-tracker-table}/stream/2022-05-19T08:07:25.298
+

@@ -1,0 +1,5 @@
+---
+  function:
+    handler: src/createAgentJourney/index.handler
+    environment:
+      AGENT_STATUS_TRACKER_TABLE_NAME: ${ssm:contact-activity-table}
